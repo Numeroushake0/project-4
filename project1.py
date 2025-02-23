@@ -32,10 +32,11 @@ class Record:
         self.phones = [p for p in self.phones if p.value != phone]
 
     def edit_phone(self, old_phone, new_phone):
+        if not re.match(r'^\d{10}$', new_phone):
+            raise ValueError("Phone number must be 10 digits.")
         for phone in self.phones:
             if phone.value == old_phone:
-                self.remove_phone(old_phone)
-                self.add_phone(new_phone)
+                phone.value = new_phone
                 return
         raise ValueError("Old phone not found.")
 
